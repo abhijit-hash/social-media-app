@@ -1,12 +1,9 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
-
-const customClerkMiddleware = async (req, res, next) => {
-    console.log('Middleware applied to:', req.url);
-    return clerkMiddleware()(req, res, next);
-};
-
-export default customClerkMiddleware;
-
+import { authMiddleware } from "@clerk/nextjs/server";
+ 
+export default authMiddleware({
+  publicRoutes: ["/api/webhook"]
+});
+ 
 export const config = {
-    matcher: ['/api/(.)', '/trpc/(.)', '/'],
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 };
